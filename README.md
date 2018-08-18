@@ -12,10 +12,11 @@ Deploy.NET is typically installed on your production or test server and runs a d
 
 ## Getting started
 
-After installing Deploy.NET, all script files with the extension .deploy are automatically associated with Deploy.NET and can be run by doubleclicking them. So let's create your first deploy script!
+After installing Deploy.NET, all script files with the extension *.deploy* are automatically associated with Deploy.NET and can be run by doubleclicking them. So let's create your first deploy script!
 
-Create a new file using Notepad or any other text editor.
+Create a new file using Notepad or any other text editor, copy the following XML text into it, and save it under the name *demo.deploy*.
 
+```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <deployNET version="1.0" requiresAdmin="false">
 
@@ -23,3 +24,4 @@ Create a new file using Notepad or any other text editor.
     <download src="build.zip" dst="c:\inetpub\wwwroot\demoweb" />
   </ftp>
 </deployNET>
+```
