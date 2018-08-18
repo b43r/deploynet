@@ -151,6 +151,6 @@ Unzip an archive file into a directory. If the extension of the archive is 7z, 7
 
 #### zip
 ```xml
-<zip src="d:\temp\build_output" dst="d:\MyApp.zip"  fileMask="-.pdb;-.xml" recursive="true" />    
+<zip src="d:\temp\build_output" dst="d:\MyApp.zip" fileMask="-.pdb;-.xml" recursive="true" />    
 ```
 Zip files in a directory into an archive. 'dst' may contain a placeholder {DATE} for the current date and time. "fileMask" may contain multiple regular expressions (separated by ;) which are checked against the name of the source files. If an expression starts with a "-", files matching the regex are *excluded* from the archive. If the extension of the archive is 7z, 7zip will be used.
