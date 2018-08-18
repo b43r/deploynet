@@ -21,7 +21,14 @@ Create a new file using Notepad or any other text editor, copy the following XML
 <deployNET version="1.0" requiresAdmin="false">
 
   <ftp server="ftp.server.com" user="anonymous" password="anon@mail.com">
-    <download src="build.zip" dst="c:\inetpub\wwwroot\demoweb" />
+    <download src="build.zip" dst="c:\temp\build.zip" />
   </ftp>
+  
+  <unzip src="c:\temp\build.zip" dst="c:\inetpub\wwwroot\MyApp" />
+  
 </deployNET>
 ```
+
+Now you should be able to doubleclick your *demo.deploy* file to automatically start Deploy.NET. The above script will download a file called *build.zip* from an FTP server into the temp directory. Then the ZIP file will be extracted to *c:\inetpub\wwwroot\MyApp*.
+
+
