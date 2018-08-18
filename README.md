@@ -36,39 +36,64 @@ If you run the script, it will download a file called *build.zip* from an FTP se
 
 ## Command reference
 
+#### alert
 ```xml
-  <!-- show a message box -->
-  <alert msg="This is a demo of all commands." title="Important message" />
+<alert msg="This is a demo of all commands." title="Important message" />
+```
 
-  <!-- build a VisualStudio project file -->
-  <build project="MyProject.csproj" platform="x86" configuration="Release" output="d:\temp\build_output" target="" />
+#### build
+```xml
+<build project="MyProject.csproj" platform="x86" configuration="Release" output="d:\temp\build_output" target="" />
+```
+Build a Visual Studio project.
 
+#### copy
+```xml
   <!-- copy a file or folder (including all files and subfolders), 'dst' may include placeholders -->
   <copy src="d:\file1.txt" dst="d:\file2.txt" />
   <copy src="d:\file1.txt" dst="d:\file-{DATE:yyyy-MM-dd}.txt" />
   <copy src="d:\folder1" dst="d:\folder2" />
+```
+Copy a file or folder (including all files and subfolders). 'dst' may contain a placeholder {DATE} for the current date and time.
 
-  <!-- delay script execution by some milliseconds -->
-  <delay ms="1000" />
+#### delay
+```xml
+<delay ms="1000" />
+```
+Delay the execution of the script by some milliseconds.
 
-  <!-- delete a file or folder (deleting a non-empty folder will fail unless recursive="true" is specified) -->
-  <delete file="d:\file1.txt" />
-  <delete folder="d:\folder1" recursive="true" />
+#### delete
+```xml
+<delete file="d:\file1.txt" />
+<delete folder="d:\folder1" recursive="true" />
+```
+Delete a file or folder. Note that deleting a non-empty folder will fail unless recursive="true" is specified.
 
-  <!-- display an error message and abort script -->
-  <error>Message</error>
+#### error
+```xml
+<error>Message</error>
+```
+Display an error message and abort the script.
 
-  <!-- upload or download files to/from an ftp server-->
-  <ftp server="ftp.server.com" user="anonymous" password="anon@mail.com">
-    <upload src="d:\file1.txt" dst="file1.txt" />
-    <download src="file2.txt" dst="d:\file2.txt" />
-  </ftp>
+#### ftp
+```xml
+<ftp server="ftp.server.com" user="anonymous" password="anon@mail.com">
+  <upload src="d:\file1.txt" dst="file1.txt" />
+  <download src="file2.txt" dst="d:\file2.txt" />
+</ftp>
+```
+Upload or download files to/from an FTP server.
 
-  <!-- executes other commands only if a file or folder exists -->
-  <ifexists file="d:\file1.txt">
-    <alert msg="File exists!" />
-  </ifexists>
-  <ifexits folder="d:\folder1"></ifexits>
+#### ifexists
+```xml
+<ifexists file="d:\file1.txt">
+  <alert msg="File exists!" />
+</ifexists>
+<ifexits folder="d:\folder1">
+  <alert msg="Folder exists!" />
+</ifexits>
+```
+Executes other commands only if a file or folder exists. Any number of commands can be nested in the ```<ifexists></ifexists>``` tag.
 
   <!-- executes other commands only if a file or folder NOT exists -->
   <ifnotexists file="d:\file2.txt"></ifnotexists>
