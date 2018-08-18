@@ -95,38 +95,62 @@ Upload or download files to/from an FTP server.
 ```
 Executes other commands only if a file or folder exists. Any number of commands can be nested in the ```<ifexists></ifexists>``` tag.
 
-  <!-- executes other commands only if a file or folder NOT exists -->
-  <ifnotexists file="d:\file2.txt"></ifnotexists>
-  <ifnotexists folder="d:\folder2"></ifnotexists>
-
-  <!-- stop an restart an IIS application pool -->
-  <iisapppool name="Test" action="stop"/>
-  <iisapppool name="Test" action="start"/>
-  
-  <!-- move a file or folder, 'dst' may include placeholders -->
-  <move src="d:\file1.txt" dst="d:\folder2\subfolder\file1.txt" />
-  <move src="d:\folder1" dst="d:\folder2\subfolder\folder1" />
-
-  <!-- does nothing -->
-  <nop />
-
-  <!-- rename a file or folder, 'dst' may include placeholders -->
-  <rename src="d:\file1.txt" dst="file3.txt" />
-  <rename src="d:\folder1" dst="folder3" />
-
-  <!-- replace text within a file, 'dst' may include placeholders -->
-  <replacetext src="string BuildDate = &quot;.*&quot;" dst="BuildDate: {DATE}" file="d:\version.cs" />
-
-  <!-- run an external program -->
-  <run file="notepad.exe" arguments="license.txt" />
-
-  <!-- start or stop a Windows servoce -->
-  <service name="MyServiceName" action="start" />
-  <service name="MyServiceName" action="stop" />
-
-  <!-- unzip a file, if the extension is 7z, 7zip will be used -->
-  <unzip src="d:\MyApp.zip" dst="d:\MyApp" />
-
-  <!-- zip files in a directory, 'dst' may include placeholders, if the extension is 7z, 7zip will be used -->
-  <zip src="d:\temp\build_output" dst="d:\MyApp.zip" fileMask="-.pdb" recursive="true" />    
+#### ifnotexists
+```xml
+<ifnotexists file="d:\file2.txt"></ifnotexists>
+<ifnotexists folder="d:\folder2"></ifnotexists>
 ```
+Executes other commands only if a file or folder NOT exists.
+
+#### iisapppool
+```xml
+<iisapppool name="Test" action="stop"/>
+<iisapppool name="Test" action="start"/>
+<iisapppool name="Test" action="start"/>
+```
+Start, stop or recylce an IIS application pool.
+
+#### iisapppool
+```xml
+<move src="d:\file1.txt" dst="d:\folder2\subfolder\file1.txt" />
+<move src="d:\folder1" dst="d:\folder2\subfolder\folder1" />
+```
+Move a file or folder, 'dst' may contain a placeholder {DATE} for the current date and time.
+
+#### rename
+```xml
+<rename src="d:\file1.txt" dst="file3.txt" />
+<rename src="d:\folder1" dst="folder3" />
+```
+Rename a file or folder, 'dst' may contain a placeholder {DATE} for the current date and time.
+
+#### replacetext
+```xml
+<replacetext src="string BuildDate = &quot;.*&quot;" dst="BuildDate: {DATE}" file="d:\version.cs" />
+```
+Replace text in a file, 'dst' may contain a placeholder {DATE} for the current date and time.
+
+#### run
+```xml
+<run file="notepad.exe" arguments="license.txt" />
+```
+Run an external program.
+
+#### service
+```xml
+<service name="MyServiceName" action="start" />
+<service name="MyServiceName" action="stop" />
+```
+Start or stop a Windows service.
+
+#### unzip
+```xml
+<unzip src="d:\MyApp.zip" dst="d:\MyApp" check="true" />
+```
+Unzip an archive file into a directory. If the extension of the archive is 7z, 7zip will be used. If "check" is set to "true", the archive integrity will be checked prior to extracting (7zip only).
+
+#### zip
+```xml
+<zip src="d:\temp\build_output" dst="d:\MyApp.zip"  fileMask="-.pdb;-.xml" recursive="true" />    
+```
+Zip files in a directory into an archive. 'dst' may contain a placeholder {DATE} for the current date and time. "fileMask" may contain multiple regular expressions (separated by ;) which are checked against the name of the source files. If an expression starts with a "-", files matching the regex are *excluded* from the archive. If the extension of the archive is 7z, 7zip will be used.
