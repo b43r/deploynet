@@ -30,7 +30,7 @@ Create a new file using Notepad or any other text editor, copy the following XML
 ```
 
 Now you should be able to doubleclick your *demo.deploy* file to automatically start Deploy.NET. Don't worry, the script will not run before you click the "Start" button!
-![Deploy.NET UI](/images/deploynet1.png)
+![Deploy.NET UI](/deploynet1.png)
 
 If you run the script, it will download a file called *build.zip* from an FTP server into the temp directory. Then the ZIP file will be extracted to *c:\inetpub\wwwroot\MyApp*.
 
