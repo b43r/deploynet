@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <!-- product id must be changed whenever the version is changed -->
+	<Product Id="ECFE5488-68CB-4B38-96E6-76B1938065A2" Name="deploy.NET" Language="1033" Version="1.8.4.0" Manufacturer="deceed" UpgradeCode="a7a63956-04eb-4d90-9b65-b115d2bc6979">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+    
+		<Feature Id="ProductFeature" Title="deploy.NET" Level="1" Display="expand" Description="Install the package" ConfigurableDirectory="INSTALLFOLDER">
+			<ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="ApplicationShortcut" />
+		</Feature>
+
+    <UIRef Id="WixUI_InstallDir" />
+    <UIRef Id="WixUI_ErrorProgressText" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+
+    <Icon Id="deployNET.exe" SourceFile="$(var.deployNET.TargetPath)" />
+    <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
+
+    <Property Id="ARPPRODUCTICON" Value="deployNET.exe" />
+
+  </Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="deploy.NET" />
+			</Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="deploy.NET"/>
+      </Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<Component Id="ProductComponent" Guid="8D26E413-B38C-4459-95FB-A6220CF16823">
+        
+        <File Source="$(var.deployNET.TargetPath)" />
+        <File Source="$(var.deployNET.TargetDir)\deployNET.exe.config" />
+        <File Source="$(var.deployNET.TargetDir)\ICSharpCode.SharpZipLib.dll" />
+        <File Source="$(var.deployNET.TargetDir)\System.Net.FtpClient.dll" />
+        <File Source="$(var.deployNET.TargetDir)\SevenZipSharp.dll" />
+        <File Source="$(var.deployNET.TargetDir)\7z.dll" />
+        <File Source="$(var.deployNET.TargetDir)\Microsoft.Build.dll" />
+        <File Source="$(var.deployNET.TargetDir)\Microsoft.Build.Framework.dll" />
+        <File Source="$(var.deployNET.TargetDir)\Microsoft.Build.Tasks.Core.dll" />
+        <File Source="$(var.deployNET.TargetDir)\Microsoft.Build.Utilities.Core.dll" />
+        <File Source="$(var.deployNET.TargetDir)\Microsoft.Web.Administration.dll" />        
+        <File Source="$(var.deployNET.TargetDir)\System.Collections.Immutable.dll" />
+        <File Source="$(var.deployNET.TargetDir)\System.Diagnostics.Process.dll" />
+        <File Source="$(var.deployNET.TargetDir)\System.IO.Compression.dll" />
+        <File Source="$(var.deployNET.TargetDir)\System.Reflection.Metadata.dll" />
+        <File Source="$(var.deployNET.TargetDir)\System.Threading.Thread.dll" />
+			  <File Source="$(var.deployNET.TargetDir)\System.Threading.Tasks.Dataflow.dll" />
+        <File Source="$(var.deployNET.TargetDir)\System.Runtime.InteropServices.RuntimeInformation.dll" />
+        
+        <!-- add 'Deploy with deploy.NET' to the context menu of .deploy files -->
+        <ProgId Id="deployNET" Description='Some description' Advertise='yes' Icon='deployNET.exe'>
+          <Extension Id='deploy'>
+            <Verb Id='open' Sequence='10' Command='Deploy with deploy.NET' Argument='/script:"%1"' />
+          </Extension>
+        </ProgId>
+
+        <!-- add 'Edit' to the context menu of .deploy files -->
+        <RegistryKey Root="HKCR" Key="deployNET">
+          <RegistryValue Key="shell\edit\command" Value="%SystemRoot%\system32\NOTEPAD.EXE %1" Type="expandable" />
+          <RegistryValue Key="shell\edit" Name="MuiVerb" Value="Edit" Type="string" />
+        </RegistryKey>
+
+      </Component>
+		</ComponentGroup>
+	</Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="6EDC664B-BF48-4B31-8083-C1558F9680EB">
+        <!-- add a start menu shortcut to start deployNET.exe -->
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Icon="deployNET.exe"
+                  Name="deploy.NET"
+                  Description="Run deploy.NET"
+                  Target="[INSTALLFOLDER]deployNET.exe"
+                  WorkingDirectory="INSTALLFOLDER"/>
+
+        <!-- and one to uninstall it -->
+        <Shortcut Id="UninstallProduct"
+                  Name="Uninstall deploy.NET"
+                  Target="[SystemFolder]msiexec.exe"
+                  Arguments="/x [ProductCode]"
+                  Description="Uninstalls deploy.NET" />
+        
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\deploy.NET" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+</Wix>
