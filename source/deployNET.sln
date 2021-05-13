@@ -1,18 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "deployNET", "deployNET\deployNET.csproj", "{54794A19-EF9D-4D1A-9069-53E46C9703C5}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "SetupProject", "SetupProject\SetupProject.wixproj", "{9CF3AF0A-288E-415B-8B59-764099CB2EAB}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{BBB43167-CFF0-4DF6-908D-887459B2A8B7}"
-	ProjectSection(SolutionItems) = preProject
-		deployNET\lib\ICSharpCode.SharpZipLib.dll = deployNET\lib\ICSharpCode.SharpZipLib.dll
-		deployNET\lib\SevenZipSharp.dll = deployNET\lib\SevenZipSharp.dll
-		deployNET\lib\System.Net.FtpClient.dll = deployNET\lib\System.Net.FtpClient.dll
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,17 +27,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2AE992AE-29C1-4553-BB1A-4EA0F397BC21}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://deceed.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = deployNET\\deployNET.csproj
-		SccProjectName1 = deployNET
-		SccLocalPath1 = deployNET
-		SccProjectUniqueName2 = SetupProject\\SetupProject.wixproj
-		SccProjectName2 = SetupProject
-		SccLocalPath2 = SetupProject
 	EndGlobalSection
 EndGlobal

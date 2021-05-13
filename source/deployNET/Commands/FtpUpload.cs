@@ -1,7 +1,7 @@
 ﻿/*
  * deploy.NET
  * 
- * Copyright (C) 2013..2018 by deceed / Simon Baer
+ * Copyright (C) 2013..2021 by deceed / Simon Baer
  *
  * This program is free software; you can redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation; either
@@ -18,9 +18,10 @@
 
 using System;
 using System.Xml;
-using System.Net.FtpClient;
 using System.IO;
 using System.Windows.Forms;
+
+using FluentFTP;
 
 namespace ch.deceed.deployNET.Commands
 {
@@ -57,31 +58,21 @@ namespace ch.deceed.deployNET.Commands
             {
                 try
                 {
-                    using (Stream s = client.OpenWrite(dst))
-                    {
-                        using (FileStream fs = new FileStream(src, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    int oldPercent = 0;
+                    Action<FtpProgress> progress = new Action<FtpProgress>(x => {
+                        if (x.Progress > 0)
                         {
-                            long bytesTotal = fs.Length;
-                            long bytesCopied = 0;
-                            int percent = 0;
-                            int oldPercent = 0;
-                            byte[] buffer = new byte[32768];
-                            int read;
-                            while ((read = fs.Read(buffer, 0, buffer.Length)) > 0)
+                            if ((int)Math.Round(x.Progress) > oldPercent)
                             {
-                                s.Write(buffer, 0, read);
-                                bytesCopied += read;
-                                percent = (int)Math.Round(bytesCopied * 100d / bytesTotal);
-                                if (percent > oldPercent)
-                                {
-                                    oldPercent = percent;
-                                    OnProgress(percent);
-                                }
+                                oldPercent = (int)Math.Round(x.Progress);
+                                OnProgress(oldPercent);
                                 Application.DoEvents();
                             }
                         }
-                    }
-                    return true;
+                    });
+
+                    var status = client.UploadFile(src, dst, FtpRemoteExists.Overwrite, false, FtpVerify.None, progress);
+                    return status == FtpStatus.Success;
                 }
                 catch (Exception ex)
                 {

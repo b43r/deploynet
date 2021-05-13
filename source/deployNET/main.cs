@@ -1,7 +1,7 @@
 ﻿/*
  * deploy.NET
  * 
- * Copyright (C) 2013..2018 by deceed / Simon Baer
+ * Copyright (C) 2013..2021 by deceed / Simon Baer
  *
  * This program is free software; you can redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation; either
@@ -398,7 +398,7 @@ namespace ch.deceed.deployNET
         /// <param name="e"></param>
         private void lblVersion_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Copyright (c) 2013..2018 by Simon Baer\r\rhttps://github.com/b43r/deploynet", "About deploy.NET", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Copyright (c) 2013..2021 by Simon Baer\r\rhttps://github.com/b43r/deploynet", "About deploy.NET", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /// <summary>

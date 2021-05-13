@@ -1,7 +1,7 @@
 ﻿/*
  * deploy.NET
  * 
- * Copyright (C) 2013..2018 by deceed / Simon Baer
+ * Copyright (C) 2013..2021 by deceed / Simon Baer
  *
  * This program is free software; you can redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation; either
@@ -19,7 +19,8 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
-using System.Net.FtpClient;
+
+using FluentFTP;
 
 namespace ch.deceed.deployNET.Commands
 {
@@ -31,6 +32,7 @@ namespace ch.deceed.deployNET.Commands
         private string userName;
         private string password;
         private string server;
+        private bool useTls;
 
         private List<FtpCommand> commands = new List<FtpCommand>();
 
@@ -51,6 +53,7 @@ namespace ch.deceed.deployNET.Commands
             userName = node.GetAttribute("user");
             password = node.GetAttribute("password");
             server = node.GetAttribute("server");
+            useTls = node.HasAttribute("useTls") && node.GetAttribute("useTls").ToLower() == "true";
 
             foreach (XmlNode child in node.ChildNodes)
             {
@@ -87,14 +90,17 @@ namespace ch.deceed.deployNET.Commands
                 {
                     client.Credentials = new System.Net.NetworkCredential(userName, password);
                     client.Host = server;
+                    client.EncryptionMode = useTls ? FtpEncryptionMode.Explicit : FtpEncryptionMode.Auto;
+                    client.ValidateAnyCertificate = true;
                     client.Connect();
-                    //client.DataConnectionType = FtpDataConnectionType.AutoPassive;
 
                     // execute all commands
                     bool success = true;
                     if (client.IsConnected)
                     {
-                        client.SetDataType(FtpDataType.Binary);
+                        client.DownloadDataType = FtpDataType.Binary;
+                        client.UploadDataType = FtpDataType.Binary;
+                        client.DataConnectionType = FtpDataConnectionType.PASV;
 
                         foreach (FtpCommand cmd in commands)
                         {

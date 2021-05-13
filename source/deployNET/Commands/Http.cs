@@ -17,54 +17,74 @@
  */
 
 using System;
-using System.Diagnostics;
-using System.IO;
 using System.Xml;
+using System.IO;
 
 namespace ch.deceed.deployNET.Commands
 {
     /// <summary>
-    /// This command starts another process.
+    /// This command downlaods a file via http(s).
     /// </summary>
-    class Run : Command
+    class Http : Command
     {
-        private string file;
-        private string arguments;
+        private string url;
+        private string dst;
+        private string user;
+        private string password;
+
+        private static System.Net.WebClient client = new System.Net.WebClient();
 
         /// <summary>
-        /// Create a new run command from an xml node.
+        /// Create a new http command from an xml node.
         /// </summary>
         /// <param name="node">xml node</param>
         /// <param name="logger">reference to logger instance</param>
-        public Run(XmlNode node, ILog logger)
+        public Http(XmlNode node, ILog logger)
             : base(node, logger)
         {
-            if ((node.LocalName != "run") ||
-                !node.HasAttribute("file"))
+            if ((node.LocalName != "http") ||
+                !node.HasAttribute("url") || !node.HasAttribute("dst"))
             {
-                throw new ArgumentException("No valid <run> node.");
+                throw new ArgumentException("No valid <http> node.");
             }
-            file = node.GetAttribute("file");
-            arguments = node.GetAttribute("arguments");
+            url = node.GetAttribute("url");
+            dst = Utilities.GetAbsolutePath(Utilities.ReplacePlaceholders(node.GetAttribute("dst")));
+            user = node.GetAttribute("user");
+            password = node.GetAttribute("password");
         }
 
         /// <summary>
-        /// Execute a process.
+        /// Download a file via http.
         /// </summary>
         /// <returns>true if successful</returns>
         public override bool Execute()
         {
             try
             {
-                Process.Start(file, arguments);
+                if (File.Exists(dst))
+                {
+                    File.Delete(dst);
+                }
+
+                if (!string.IsNullOrEmpty(user) && !string.IsNullOrEmpty(password))
+                {
+                    client.Credentials = new System.Net.NetworkCredential(user, password);
+                }            
+                else
+                {
+                    client.Credentials = null;
+                }
+
+                client.DownloadFile(url, dst);
                 return true;
             }
             catch (Exception ex)
             {
                 LastException = ex;
-                LastError = String.Format(Properties.Resources.ErrorExecute, Path.GetFileName(file), arguments);
+                LastError = String.Format(Properties.Resources.ErrorHttp, url, dst);
                 return false;
             }
         }
     }
 }
+

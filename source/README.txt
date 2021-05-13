@@ -1,3 +1,10 @@
+deploy.NET 2.0.0.0, 2021-05-13
+==============================
+
+- removed MSBuild engine
+- new http command to download files
+
+
 deploy.NET 1.8.4.0, 2018-08-29
 ==============================
 

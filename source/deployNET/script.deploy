@@ -1,13 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<deployNET version="1.0" requiresAdmin="true">
+<deployNET version="1.0" requiresAdmin="false">
   <!-- set application title -->
   <title>TEST</title>
 
   <!-- show a message box -->
   <alert msg="This is a demo of all commands." title="Important message" />
-
-  <!-- build a VisualStudio project file -->
-  <build project="MyProject.csproj" platform="x86" configuration="Release" output="d:\temp\build_output" target="" />
 
   <!-- copy a file or folder (including all files and subfolders), 'dst' may include placeholders -->
   <copy src="d:\file1.txt" dst="d:\file2.txt" />6
@@ -30,6 +27,9 @@
     <download src="file2.txt" dst="d:\file2.txt" />
   </ftp>
 
+  <!-- download a file using the http(s) protocol -->
+  <http url="https://raw.githubusercontent.com/b43r/deploynet/master/deploynet1.png" dst="d:\deploynet1.png" />
+  
   <!-- executes other commands only if a file or folder exists -->
   <ifexists file="d:\file1.txt">
     <alert msg="File exists!" />

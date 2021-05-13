@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <!-- product id must be changed whenever the version is changed -->
-	<Product Id="ECFE5488-68CB-4B38-96E6-76B1938065A2" Name="deploy.NET" Language="1033" Version="1.8.4.0" Manufacturer="deceed" UpgradeCode="a7a63956-04eb-4d90-9b65-b115d2bc6979">
+	<Product Id="3DD1DF95-85F9-4167-B1A6-EAFD4F652421" Name="deploy.NET" Language="1033" Version="2.0.0.0" Manufacturer="deceed" UpgradeCode="a7a63956-04eb-4d90-9b65-b115d2bc6979">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -13,7 +13,6 @@
 		</Feature>
 
     <UIRef Id="WixUI_InstallDir" />
-    <UIRef Id="WixUI_ErrorProgressText" />
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
 
     <Icon Id="deployNET.exe" SourceFile="$(var.deployNET.TargetPath)" />
@@ -41,20 +40,15 @@
         <File Source="$(var.deployNET.TargetPath)" />
         <File Source="$(var.deployNET.TargetDir)\deployNET.exe.config" />
         <File Source="$(var.deployNET.TargetDir)\ICSharpCode.SharpZipLib.dll" />
-        <File Source="$(var.deployNET.TargetDir)\System.Net.FtpClient.dll" />
+        <File Source="$(var.deployNET.TargetDir)\FluentFTP.dll" />
         <File Source="$(var.deployNET.TargetDir)\SevenZipSharp.dll" />
         <File Source="$(var.deployNET.TargetDir)\7z.dll" />
-        <File Source="$(var.deployNET.TargetDir)\Microsoft.Build.dll" />
-        <File Source="$(var.deployNET.TargetDir)\Microsoft.Build.Framework.dll" />
-        <File Source="$(var.deployNET.TargetDir)\Microsoft.Build.Tasks.Core.dll" />
-        <File Source="$(var.deployNET.TargetDir)\Microsoft.Build.Utilities.Core.dll" />
-        <File Source="$(var.deployNET.TargetDir)\Microsoft.Web.Administration.dll" />        
         <File Source="$(var.deployNET.TargetDir)\System.Collections.Immutable.dll" />
         <File Source="$(var.deployNET.TargetDir)\System.Diagnostics.Process.dll" />
         <File Source="$(var.deployNET.TargetDir)\System.IO.Compression.dll" />
         <File Source="$(var.deployNET.TargetDir)\System.Reflection.Metadata.dll" />
         <File Source="$(var.deployNET.TargetDir)\System.Threading.Thread.dll" />
-			  <File Source="$(var.deployNET.TargetDir)\System.Threading.Tasks.Dataflow.dll" />
+        <File Source="$(var.deployNET.TargetDir)\System.Threading.Tasks.Dataflow.dll" />
         <File Source="$(var.deployNET.TargetDir)\System.Runtime.InteropServices.RuntimeInformation.dll" />
         
         <!-- add 'Deploy with deploy.NET' to the context menu of .deploy files -->

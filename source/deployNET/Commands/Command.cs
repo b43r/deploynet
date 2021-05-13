@@ -1,7 +1,7 @@
 ﻿/*
  * deploy.NET
  * 
- * Copyright (C) 2013..2018 by deceed / Simon Baer
+ * Copyright (C) 2013..2021 by deceed / Simon Baer
  *
  * This program is free software; you can redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation; either
@@ -130,8 +130,6 @@ namespace ch.deceed.deployNET.Commands
                     return new Error(node, logger);
                 case "service":
                     return new Service(node, logger);
-                case "build":
-                    return new Build(node, logger);
                 case "replacetext":
                     return new ReplaceText(node, logger);
                 case "delay":
@@ -140,6 +138,8 @@ namespace ch.deceed.deployNET.Commands
                     return new Run(node, logger);
                 case "iisapppool":
                     return new IISAppPool(node, logger);
+                case "http":
+                    return new Http(node, logger);
                 default:
                     return new Nop(node, logger);
             }

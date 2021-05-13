@@ -1,7 +1,7 @@
 ﻿/*
  * deploy.NET
  * 
- * Copyright (C) 2013..2018 by deceed / Simon Baer
+ * Copyright (C) 2013..2021 by deceed / Simon Baer
  *
  * This program is free software; you can redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation; either
@@ -18,8 +18,9 @@
 
 using System;
 using System.Xml;
-using System.Net.FtpClient;
 using System.Text;
+
+using FluentFTP;
 
 namespace ch.deceed.deployNET.Commands
 {
