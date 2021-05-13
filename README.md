@@ -40,13 +40,6 @@ If you run the script, it will download a file called *build.zip* from an FTP se
 ```xml
 <alert msg="This is a demo of all commands." title="Important message" />
 ```
-
-#### build
-```xml
-<build project="MyProject.csproj" platform="x86" configuration="Release" output="d:\temp\build_output" target="" />
-```
-Build a Visual Studio project.
-
 #### copy
 ```xml
   <!-- copy a file or folder (including all files and subfolders), 'dst' may include placeholders -->
@@ -81,6 +74,12 @@ Display an error message and abort the script.
   <upload src="d:\file1.txt" dst="file1.txt" />
   <download src="file2.txt" dst="d:\file2.txt" />
 </ftp>
+```
+Upload or download files to/from an FTP server.
+
+#### http
+```xml
+<http url="https://raw.githubusercontent.com/b43r/deploynet/master/deploynet1.png" dst="d:\image.png" />
 ```
 Upload or download files to/from an FTP server.
 
