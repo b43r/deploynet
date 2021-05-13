@@ -81,7 +81,7 @@ Upload or download files to/from an FTP server.
 ```xml
 <http url="https://raw.githubusercontent.com/b43r/deploynet/master/deploynet1.png" dst="d:\image.png" />
 ```
-Upload or download files to/from an FTP server.
+Download a file from the internet by http(s) protocol and save it locally. Optionally basic authentication can be used if ```user```and ```password``` attributes are specified.
 
 #### ifexists
 ```xml
