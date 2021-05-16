@@ -19,6 +19,7 @@
 using System;
 using System.Xml;
 using System.IO;
+using System.Reflection;
 
 using ICSharpCode.SharpZipLib.Zip;
 
@@ -35,7 +36,6 @@ namespace ch.deceed.deployNET.Commands
         private string dst;
         private bool checkIntegrity;
         private bool use7zip;
-        private volatile bool finished;
 
         /// <summary>
         /// Create a new unzip command from an xml node.
@@ -54,6 +54,13 @@ namespace ch.deceed.deployNET.Commands
             dst = Utilities.GetAbsolutePath(node.GetAttribute("dst"));
             checkIntegrity = node.GetAttribute("check") == "true";
             use7zip = src.ToLower().EndsWith(".7z");
+
+            if (use7zip && Environment.Is64BitOperatingSystem)
+            {
+                string dll = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "7z_x64.dll");
+                SevenZipExtractor.SetLibraryPath(dll);
+            }
+
             HasProgress = true;
         }
 
@@ -79,19 +86,13 @@ namespace ch.deceed.deployNET.Commands
                             }
 
                             extractor.Extracting += extractor_Extracting;
-                            extractor.ExtractionFinished += extractor_ExtractionFinished;
-                            finished = false;
-                            extractor.BeginExtractArchive(dst);                            
-
-                            // wait until the command has ended
-                            while (!finished)
-                            {
-                                System.Windows.Forms.Application.DoEvents();
-                            }
+                            extractor.ExtractArchive(dst);
+                            extractor.Extracting -= extractor_Extracting;
                         }
                     }
                     else
                     {
+                        
                         FastZip zip = new FastZip();
                         zip.ExtractZip(src, dst, null);
                     }
@@ -110,16 +111,6 @@ namespace ch.deceed.deployNET.Commands
                 return false;
             }
             return true;
-        }
-
-        /// <summary>
-        /// Indicate end of execution.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void extractor_ExtractionFinished(object sender, EventArgs e)
-        {
-            finished = true;
         }
 
         /// <summary>

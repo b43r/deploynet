@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <!-- product id must be changed whenever the version is changed -->
-	<Product Id="3DD1DF95-85F9-4167-B1A6-EAFD4F652421" Name="deploy.NET" Language="1033" Version="2.0.0.0" Manufacturer="deceed" UpgradeCode="a7a63956-04eb-4d90-9b65-b115d2bc6979">
+	<Product Id="F8108713-F100-4BA9-9A6F-0F89D0E5F01D" Name="deploy.NET" Language="1033" Version="2.0.1.0" Manufacturer="deceed" UpgradeCode="a7a63956-04eb-4d90-9b65-b115d2bc6979">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />

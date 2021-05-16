@@ -198,6 +198,12 @@ namespace ch.deceed.deployNET
 
                     cmdResult = cmd.Execute();
                     progressBar.Visible = false;
+                    if (cmd.HasProgress)
+                    {
+                        cmd.Progress -= cmd_Progress;
+                    }
+
+
                     if (!cmdResult)
                     {
                         // display error and exception

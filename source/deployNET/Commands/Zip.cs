@@ -21,6 +21,7 @@ using System.Xml;
 using System.IO;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Reflection;
 
 using ICSharpCode.SharpZipLib.Zip;
 
@@ -58,6 +59,12 @@ namespace ch.deceed.deployNET.Commands
             fileMask = node.HasAttribute("fileMask") ? node.GetAttribute("fileMask") : string.Empty;
             recursive = node.GetAttribute("recursive") == "true";
             use7zip = dst.ToLower().EndsWith(".7z");
+
+            if (use7zip && Environment.Is64BitOperatingSystem)
+            {
+                string dll = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "7z_x64.dll");
+                SevenZipCompressor.SetLibraryPath(dll);
+            }
 
             HasProgress = true;
         }
@@ -134,6 +141,9 @@ namespace ch.deceed.deployNET.Commands
                         {
                             System.Windows.Forms.Application.DoEvents();
                         }
+
+                        compressor.Compressing -= compressor_Compressing;
+                        compressor.CompressionFinished -= compressor_CompressionFinished;
                     }
                     else
                     {
