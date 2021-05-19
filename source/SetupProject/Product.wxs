@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <!-- product id must be changed whenever the version is changed -->
-	<Product Id="F8108713-F100-4BA9-9A6F-0F89D0E5F01D" Name="deploy.NET" Language="1033" Version="2.0.1.0" Manufacturer="deceed" UpgradeCode="a7a63956-04eb-4d90-9b65-b115d2bc6979">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+	<Product Id="5591E0AF-C8E3-4DBC-8546-943B218910FC" Name="deploy.NET" Language="1033" Version="2.0.2.0" Manufacturer="deceed" UpgradeCode="a7a63956-04eb-4d90-9b65-b115d2bc6979">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Platform="x64" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
@@ -24,7 +24,7 @@
 
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
+			<Directory Id="ProgramFiles64Folder">
 				<Directory Id="INSTALLFOLDER" Name="deploy.NET" />
 			</Directory>
       <Directory Id="ProgramMenuFolder">
@@ -35,7 +35,7 @@
 
 	<Fragment>
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<Component Id="ProductComponent" Guid="8D26E413-B38C-4459-95FB-A6220CF16823">
+			<Component Id="ProductComponent" Win64="yes" Guid="8D26E413-B38C-4459-95FB-A6220CF16823">
         
         <File Source="$(var.deployNET.TargetPath)" />
         <File Source="$(var.deployNET.TargetDir)\deployNET.exe.config" />
@@ -43,6 +43,7 @@
         <File Source="$(var.deployNET.TargetDir)\FluentFTP.dll" />
         <File Source="$(var.deployNET.TargetDir)\SevenZipSharp.dll" />
         <File Source="$(var.deployNET.TargetDir)\7z.dll" />
+        <File Source="$(var.deployNET.TargetDir)\7z_x64.dll" />
         <File Source="$(var.deployNET.TargetDir)\System.Collections.Immutable.dll" />
         <File Source="$(var.deployNET.TargetDir)\System.Diagnostics.Process.dll" />
         <File Source="$(var.deployNET.TargetDir)\System.IO.Compression.dll" />

@@ -60,7 +60,7 @@ namespace ch.deceed.deployNET.Commands
             recursive = node.GetAttribute("recursive") == "true";
             use7zip = dst.ToLower().EndsWith(".7z");
 
-            if (use7zip && Environment.Is64BitOperatingSystem)
+            if (use7zip && Environment.Is64BitProcess)
             {
                 string dll = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "7z_x64.dll");
                 SevenZipCompressor.SetLibraryPath(dll);

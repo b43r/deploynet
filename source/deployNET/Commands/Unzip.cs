@@ -55,7 +55,7 @@ namespace ch.deceed.deployNET.Commands
             checkIntegrity = node.GetAttribute("check") == "true";
             use7zip = src.ToLower().EndsWith(".7z");
 
-            if (use7zip && Environment.Is64BitOperatingSystem)
+            if (use7zip && Environment.Is64BitProcess)
             {
                 string dll = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "7z_x64.dll");
                 SevenZipExtractor.SetLibraryPath(dll);
