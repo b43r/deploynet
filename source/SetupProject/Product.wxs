@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <!-- product id must be changed whenever the version is changed -->
-	<Product Id="5591E0AF-C8E3-4DBC-8546-943B218910FC" Name="deploy.NET" Language="1033" Version="2.0.2.0" Manufacturer="deceed" UpgradeCode="a7a63956-04eb-4d90-9b65-b115d2bc6979">
+	<Product Id="333C5181-4F12-493D-91D4-5027A41A62D6" Name="deploy.NET" Language="1033" Version="2.1.0.0" Manufacturer="deceed" UpgradeCode="a7a63956-04eb-4d90-9b65-b115d2bc6979">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Platform="x64" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -44,13 +44,6 @@
         <File Source="$(var.deployNET.TargetDir)\SevenZipSharp.dll" />
         <File Source="$(var.deployNET.TargetDir)\7z.dll" />
         <File Source="$(var.deployNET.TargetDir)\7z_x64.dll" />
-        <File Source="$(var.deployNET.TargetDir)\System.Collections.Immutable.dll" />
-        <File Source="$(var.deployNET.TargetDir)\System.Diagnostics.Process.dll" />
-        <File Source="$(var.deployNET.TargetDir)\System.IO.Compression.dll" />
-        <File Source="$(var.deployNET.TargetDir)\System.Reflection.Metadata.dll" />
-        <File Source="$(var.deployNET.TargetDir)\System.Threading.Thread.dll" />
-        <File Source="$(var.deployNET.TargetDir)\System.Threading.Tasks.Dataflow.dll" />
-        <File Source="$(var.deployNET.TargetDir)\System.Runtime.InteropServices.RuntimeInformation.dll" />
         
         <!-- add 'Deploy with deploy.NET' to the context menu of .deploy files -->
         <ProgId Id="deployNET" Description='Some description' Advertise='yes' Icon='deployNET.exe'>

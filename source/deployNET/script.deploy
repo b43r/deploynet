@@ -1,14 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<deployNET version="1.0" requiresAdmin="false">
+<deployNET version="1.0" requiresAdmin="true">
   <!-- set application title -->
   <title>TEST</title>
 
   <!-- show a message box -->
   <alert msg="This is a demo of all commands." title="Important message" />
 
+  <!-- FTP download  -->
+  <ftp server="ftp.gnu.org" user="anonymous" password="anon@mail.com">
+    <download src="README" dst="d:\file1.txt" />
+  </ftp>
+
+  <!-- download a file using the http(s) protocol -->
+  <http url="https://raw.githubusercontent.com/b43r/deploynet/master/deploynet1.png" dst="d:\deploynet1.png" />
+
   <!-- copy a file or folder (including all files and subfolders), 'dst' may include placeholders -->
-  <copy src="d:\file1.txt" dst="d:\file2.txt" />6
+  <copy src="d:\file1.txt" dst="d:\file2.txt" />
   <copy src="d:\file1.txt" dst="d:\file-{DATE:yyyy-MM-dd}.txt" />
+  <copy src="d:\file1.txt" dst="d:\folder1\file1.txt" />
   <copy src="d:\folder1" dst="d:\folder2" />
 
   <!-- delay script execution by some milliseconds -->
@@ -21,15 +30,6 @@
   <!-- display an error message and abort script -->
   <error>Message</error>
 
-  <!-- upload or download files to/from an ftp server-->
-  <ftp server="ftp.server.com" user="anonymous" password="anon@mail.com">
-    <upload src="d:\file1.txt" dst="file1.txt" />
-    <download src="file2.txt" dst="d:\file2.txt" />
-  </ftp>
-
-  <!-- download a file using the http(s) protocol -->
-  <http url="https://raw.githubusercontent.com/b43r/deploynet/master/deploynet1.png" dst="d:\deploynet1.png" />
-  
   <!-- executes other commands only if a file or folder exists -->
   <ifexists file="d:\file1.txt">
     <alert msg="File exists!" />
@@ -52,23 +52,29 @@
   <nop />
 
   <!-- rename a file or folder, 'dst' may include placeholders -->
-  <rename src="d:\file1.txt" dst="file3.txt" />
-  <rename src="d:\folder1" dst="folder3" />
+  <rename src="d:\file2.txt" dst="file3.txt" />
+  <rename src="d:\folder2" dst="folder3" />
 
   <!-- replace text within a file, 'dst' may include placeholders -->
   <replacetext src="string BuildDate = &quot;.*&quot;" dst="BuildDate: {DATE}" file="d:\version.cs" />
 
   <!-- run an external program -->
-  <run file="notepad.exe" arguments="license.txt" />
+  <run file="notepad.exe" arguments="d:\file3.txt" />
 
   <!-- start or stop a Windows servoce -->
-  <service name="MyServiceName" action="start" />
-  <service name="MyServiceName" action="stop" />
-
-  <!-- unzip a file, if the extension is 7z, 7zip will be used -->
-  <unzip src="d:\MyApp.zip" dst="d:\MyApp" />
+  <service name="EventLog" action="stop" />
+  <service name="EventLog" action="start" /> 
 
   <!-- zip files in a directory, 'dst' may include placeholders, if the extension is 7z, 7zip will be used -->
-  <zip src="d:\temp\build_output" dst="d:\MyApp.zip" fileMask="-.pdb" recursive="true" />
+  <zip src="d:\folder3" dst="d:\folder3.zip" fileMask="-.pdb" recursive="true" />
+
+  <!-- zip files in a directory, 'dst' may include placeholders, if the extension is 7z, 7zip will be used -->
+  <zip src="d:\folder3" dst="d:\folder3.7z" fileMask="-.pdb" recursive="true" />
+
+  <!-- unzip a file, if the extension is 7z, 7zip will be used -->
+  <unzip src="d:\folder3.zip" dst="d:\folder3_zip_extracted" />
+
+  <!-- unzip a file, if the extension is 7z, 7zip will be used -->
+  <unzip src="d:\folder3.7z" dst="d:\folder3_7z_extracted" />
 
 </deployNET>
